@@ -13,23 +13,6 @@ Log daily weights, fetch the latest entry, and delete mistakes — perfect for s
 
 ---
 
-## 🧭 Architecture (Mermaid)
-
-```mermaid
-flowchart LR
-    A[Client (Swagger / cURL / App)] -->|HTTP JSON| B[FastAPI (app.main)]
-    B --> C[Schemas (Pydantic)]
-    B --> D[Models (SQLAlchemy ORM)]
-    D --> E[(PostgreSQL)]
-    subgraph Runtime
-      B
-      C
-      D
-    end
-    subgraph Infra
-      E
-    end
-```
 
 ---
 
@@ -101,3 +84,4 @@ GET /health
 ```
 POST /weigh_in
 ``
+
