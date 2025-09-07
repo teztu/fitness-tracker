@@ -33,6 +33,19 @@ def get_latest_weight(db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch latest weight: {str(e)}")
 
+@app.delete("/weight/{weight_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_weight(weight_id: int, db: Session = Depends(get_db)):
+    try:
+        row = db.get(models.Weight, weight_id)
+        if not row:
+            raise HTTPException(status_code=404, detail=f"Weight id={weight_id} not found")
+        db.delete(row)
+        # 204 -> ingen body
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to delete weight: {str(e)}")
+
 
 
 
