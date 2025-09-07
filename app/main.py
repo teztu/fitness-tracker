@@ -10,7 +10,7 @@ app = FastAPI(title="Fitness Tracker API", version="0.0.1")
 Base.metadata.create_all(bind=engine)
 
 
-.\venv\Scripts\Activate.ps1@app.get("/health")
+@app.get("/health")
 def health():
     return {"status": "everything stable", "timestamp": datetime.now()}
 
