@@ -1,18 +1,12 @@
-﻿
-
-
-
-
-
-from fastapi import FastAPI, HTTPException, Depends, status
+﻿from fastapi import FastAPI, HTTPException, Depends, status
 from sqlalchemy.orm import Session
 from datetime import datetime
-
 from . import models, schemas
 from .database import get_db, engine, Base
 
-app = FastAPI()
 
+
+app = FastAPI(title="Fitness Tracker API", version="0.0.1")
 Base.metadata.create_all(bind=engine)
 
 
@@ -54,7 +48,9 @@ def delete_weight(weight_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=f"Failed to delete weight: {str(e)}")
 
 
-
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", reload=True)
 
 
 
