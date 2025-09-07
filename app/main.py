@@ -41,7 +41,6 @@ def delete_weight(weight_id: int, db: Session = Depends(get_db)):
         if not row:
             raise HTTPException(status_code=404, detail=f"Weight id={weight_id} not found")
         db.delete(row)
-        # 204 -> ingen body
     except HTTPException:
         raise
     except Exception as e:
