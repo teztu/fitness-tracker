@@ -3,7 +3,9 @@
 A FastAPI application for tracking bodyweight.  
 Log daily weights, fetch the latest entry, and delete mistakes — perfect for simple fitness progress tracking.
 
-![Swagger UI](assets/swagger.png)
+<img width="2557" height="1227" alt="image" src="https://github.com/user-attachments/assets/19983c6f-8f37-4bc0-8733-b70bd4eda685" />
+
+
 
 ---
 
@@ -154,3 +156,4 @@ git pull
 - Extend schema with workouts & nutrition  
 - Dockerize FastAPI app (not just Postgres)  
 - CI/CD with GitHub Actions  
+
