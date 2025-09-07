@@ -1,6 +1,35 @@
 # Fitness Tracker API
 
-A FastAPI application for tracking workouts and exercises (currently focused on bodyweight logging).
+A FastAPI application for tracking bodyweight.  
+Log daily weights, fetch the latest entry, and delete mistakes — perfect for simple fitness progress tracking.
+
+---
+
+## 📖 What can you use it for?
+- Track your **daily bodyweight** over time
+- Fetch the **latest logged weight**
+- Remove mistakes with **delete**
+- Connect it to a mobile app, web dashboard, or analytics tool
+
+---
+
+## 🧭 Architecture (Mermaid)
+
+```mermaid
+flowchart LR
+    A[Client (Swagger / cURL / App)] -->|HTTP JSON| B[FastAPI (app.main)]
+    B --> C[Schemas (Pydantic)]
+    B --> D[Models (SQLAlchemy ORM)]
+    D --> E[(PostgreSQL)]
+    subgraph Runtime
+      B
+      C
+      D
+    end
+    subgraph Infra
+      E
+    end
+```
 
 ---
 
@@ -9,91 +38,66 @@ A FastAPI application for tracking workouts and exercises (currently focused on 
 - **FastAPI**
 - **SQLAlchemy**
 - **PostgreSQL**
-- **Docker**
+- **Docker** (optional for DB)
 
 ---
 
-## ▶️ How to start program
+## 🖥️ Install & run on your PC
 
-1. **Activate local environment**
-   ```powershell
-   .\venv\Scripts\Activate.ps1
-   ```
+1) **Clone repository**
+```powershell
+git clone https://github.com/<your-username>/fitness-tracker.git
+cd fitness-tracker
+```
 
-2. **Start Postgres container**
-   ```powershell
-   docker compose up -d postgres
-   docker ps   # check if fitness_postgres is running
-   ```
+2) **Create & activate virtual env**
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+```
 
-3. **Create `.env` in project root**
-   ```text
-   DATABASE_URL=postgresql+psycopg2://user:password@localhost:5432/fitness
-   ```
+3) **Install dependencies**
+```powershell
+pip install -r requirements.txt
+```
 
-4. **Start FastAPI server**
-   ```powershell
-   python -m uvicorn app.main:app --reload
-   ```
+4) **Start PostgreSQL (Docker)**
+```powershell
+docker compose up -d postgres
+docker ps   # verify 'fitness_postgres' is running
+```
 
-5. **Test if API is running**
-   ```powershell
-   curl http://127.0.0.1:8000/health
-   ```
-   **Expected output:**
-   ```json
-   { "status": "everything stable" }
-   ```
+5) **Create `.env` in project root**
+```text
+DATABASE_URL=postgresql+psycopg2://user:password@localhost:5432/fitness
+```
 
-👉 Swagger UI is available at: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+6) **Run API**
+```powershell
+python -m uvicorn app.main:app --reload
+```
+
+7) **Test health**
+```powershell
+curl http://127.0.0.1:8000/health
+```
+Expected:
+```json
+{"status": "everything stable"}
+```
+
+👉 Swagger UI: http://127.0.0.1:8000/docs
 
 ---
 
 ## 📌 API Endpoints
 
-- `GET /health` → health check  
-- `POST /weigh_in` → log new weight  
-  Example body:
-  ```json
-  { "date": "2025-09-07", "kg": 82.5 }
-  ```
-- `GET /weight/latest` → fetch latest logged weight  
-- `DELETE /weight/{weight_id}` → delete a weight entry  
-
----
-
-## 📝 Notes
-- `.env` must be saved as **UTF-8/ASCII**  
-- Always run `python -m uvicorn` (not just `uvicorn`)  
-- Docker Desktop must be running before starting Postgres  
-- Hard refresh Swagger with **Ctrl+F5** if docs cache old state  
-- Keep local `main` in sync with `origin/main` using `git pull` and `git push`  
-
----
-
-## 🔀 Git Workflow
-```powershell
-# create a new branch
-git checkout -b feature/my-feature
-
-# make changes and commit
-git add .
-git commit -m "feat: add my new feature"
-
-# push branch to GitHub
-git push -u origin feature/my-feature
-
-# create Pull Request (PR) on GitHub → review → merge into main
-
-# update local main
-git checkout main
-git pull
+### Health check
+```
+GET /health
 ```
 
----
-
-## ✅ Next Steps
-- Add authentication (users)  
-- Extend schema with more metrics (workouts, nutrition, etc.)  
-- Dockerize FastAPI app (not just Postgres)  
-- Add CI/CD pipeline with GitHub Actions  
+### Log bodyweight
+```
+POST /weigh_in
+``
