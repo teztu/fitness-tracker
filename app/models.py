@@ -1,4 +1,4 @@
-﻿from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Date, Float
+﻿from sqlalchemy import Column, Integer, Date, Float
 from .database import Base
 
 class Weight(Base):
