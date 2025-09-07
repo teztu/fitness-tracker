@@ -1,33 +1,44 @@
 ﻿from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-#from .schemas import WeightInput
+from schemas import EnterWeight, WeightOut
 from datetime import datetime
+from database import get_db
 
 app = FastAPI()
+
+db=get_db()
+
 
 @app.get("/health")
 def health():
     return {"status": "everything stable", "timestamp": datetime.now()}
 
 
-@app.post("/weigh_in")
-def entry_weight():
+@app.post("/weigh_in", response_model=schemas.WeightOut, status_code=status.HTTP_201_CREATED)
+def entry_weight(payload: schemas.WeightCreate, db: Session = Depends(get_db)):
     try:
-        """Enter today weight"""
-        return weight_data
+        row = models.Weight(date=payload.date, kg=payload.kg)
+        db.add(row)
+        db.flush()        # generer id
+        db.refresh(row)   # sørger for oppdatert state
+        return row
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"generic error message: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to insert weight: {str(e)}")
 
 
-
-@app.delete("/weight/{weight_id}")
-def delete_weight():
+@app.get("/weight/latest", response_model=schemas.WeightOut | None)
+def get_latest_weight(db: Session = Depends(get_db)):
     try:
-
-        """Delete a weight entry"""
-        return deleted_weight
+        row = db.query(models.Weight).order_by(models.Weight.id.desc()).first()
+        return row
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"generic error message: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch latest weight: {str(e)}")
+
+
+
+
+
+
+
 
 
 
