@@ -44,7 +44,7 @@ curl http://127.0.0.1:8000/health
 
 ```json
 {
-  "status": "ok"
+  "status": "everything stable"
 }
 ```
 
@@ -88,3 +88,4 @@ git push -u origin feature/my-feature
 git checkout main
 git pull
 ```
+
