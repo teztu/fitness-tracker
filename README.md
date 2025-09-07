@@ -1,4 +1,4 @@
-# Fitness Tracker API
+# A fitness tracker using FASTAPI
 
 A FastAPI application for tracking bodyweight.  
 Log daily weights, fetch the latest entry, and delete mistakes — perfect for simple fitness progress tracking.
@@ -156,4 +156,5 @@ git pull
 - Extend schema with workouts & nutrition  
 - Dockerize FastAPI app (not just Postgres)  
 - CI/CD with GitHub Actions  
+
 
