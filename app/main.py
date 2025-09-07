@@ -13,20 +13,12 @@ def health():
 @app.post("/weigh_in")
 def entry_weight():
     try:
-        """Enter todays weight"""
+        """Enter today weight"""
         return weight_data
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"generic error message: {str(e)}")
 
 
-@app.get("/weight/latest")
-def get_latest_weight():
-    try:
-
-        """Get the most recent weight entry"""
-        return latest_weight
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"generic error message: {str(e)}")
 
 @app.delete("/weight/{weight_id}")
 def delete_weight():
@@ -36,3 +28,20 @@ def delete_weight():
         return deleted_weight
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"generic error message: {str(e)}")
+
+
+
+
+
+
+
+"""  
+@app.get("/weight/latest")
+def get_latest_weight():
+    try:
+
+        """Get the most recent weight entry"""
+        return latest_weight
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"generic error message: {str(e)}")
+"""
