@@ -12,7 +12,7 @@ URL_DATABASE= os.getenv("DATABASE_URL") #reads database URL
 if not URL_DATABASE: #catches mistakes for login to databse
     raise RuntimeError("DATABASE_URL is not set. Check .env file.") #
 
-engine = create_engine(URL_DATABASE) #runs engine (connection pool for DB)
+engine = create_engine(URL_DATABASE, pool_pre_ping=True) #runs engine (connection pool for DB)
 
 
 #one DB session per request to avoid
