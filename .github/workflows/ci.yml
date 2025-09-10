@@ -23,9 +23,12 @@ jobs:
           --health-retries=10
 
     env:
-      # 👇 Viktig: bruk 'postgres' som host
+      
       DATABASE_URL: postgresql+psycopg2://testuser:testpass@postgres:5432/testdb
       PYTHONUNBUFFERED: "1"
+      PYTHONPATH: ${{ github.workspace }}
+  
+  
 
     steps:
       - uses: actions/checkout@v4
