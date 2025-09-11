@@ -12,7 +12,7 @@ Base.metadata.create_all(bind=engine)
 
 @app.get("/health")
 def health():
-    return {"status": "everything stable", "timestamp": datetime.now()}
+    return {"status": "everything stable", "timestamp": datetime.now().isoformat()}
 
 
 @app.post("/weigh_in", response_model=schemas.WeightOut, status_code=status.HTTP_201_CREATED)
