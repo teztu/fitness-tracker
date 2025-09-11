@@ -10,7 +10,7 @@ Created by Nicolas Cook for own learning experience
 
 Requires Python 3.12.
 
-    git clone https://github.com/<your-username>/fitness-tracker.git
+    git clone https://github.com/teztu/fitness-tracker.git
     cd fitness-tracker
     python -m venv .venv
     # Windows: .venv\Scripts\activate
@@ -120,3 +120,4 @@ This project was created to demonstrate practical experience with:
 - Use API for visualization of weight progression
 - Clean up code/syntax
 - Add more descriptions of what code is doing
+
