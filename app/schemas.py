@@ -10,7 +10,7 @@ class EnterWeight(BaseModel):
 class WeightOut(BaseModel):
     """when requesting weight"""
     id: int
-    date: date
+    date: dt.date
     kg: float
 
     # access object directly
