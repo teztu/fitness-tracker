@@ -1,160 +1,122 @@
-# A fitness tracker using FASTAPI
+# Fitness Tracker API 🏋️
 
-A FastAPI application for tracking bodyweight.  
-Log daily weights, fetch the latest entry, and delete mistakes — perfect for simple fitness progress tracking.
+A simple FastAPI project for logging bodyweight.  
+Built to demonstrate basic skills with **APIs, Python, SQLAlchemy, SQLite/Postgres, Docker, and CI/CD**.
+Created by Nicolas Cook for own learning experience
 
-<img width="2557" height="1227" alt="image" src="https://github.com/user-attachments/assets/19983c6f-8f37-4bc0-8733-b70bd4eda685" />
+---
 
+## 🚀 Quickstart (SQLite – easiest)
+
+Requires Python 3.12.
+
+    git clone https://github.com/<your-username>/fitness-tracker.git
+    cd fitness-tracker
+    python -m venv .venv
+    # Windows: .venv\Scripts\activate
+    # Linux/Mac: source .venv/bin/activate
+    pip install -r requirements.txt
+
+    # Start the API
+    uvicorn app.main:app --reload
+
+Open in your browser:  
+👉 http://127.0.0.1:8000/health
+
+👉 It should look something like this:
+<img width="2557" height="1227" alt="api_example" src="https://github.com/user-attachments/assets/88b96950-597d-4eb6-b560-9e6114680d29" />
 
 
 ---
 
-## 📖 What can you use it for?
-- Track your **daily bodyweight** over time
-- Fetch the **latest logged weight**
-- Remove mistakes with **delete**
-- Connect it to a mobile app, web dashboard, or analytics tool
+## 🐘 Optional: Postgres with Docker
+
+This repo also includes `docker-compose.yml` for running a Postgres database.  
+Run it (if you have Docker installed):
+
+    docker compose up -d
+
+Configure your `.env` (see `env.example`):
+
+    DATABASE_URL=postgresql+psycopg2://postgres:postgres@localhost:5432/fitness
+
+Then start the API:
+
+    uvicorn app.main:app --reload
 
 ---
 
-## 🚀 Tech Stack
+## 🔗 API Endpoints
+
+| Method | Endpoint         | Description                    |
+|--------|------------------|--------------------------------|
+| GET    | `/health`        | Health/status check            |
+| POST   | `/weigh_in`      | Log a new weight entry         |
+| GET    | `/weight/latest` | Fetch the most recent entry    |
+| GET    | `/weights`       | List all entries (paginated)   |
+| DELETE | `/weight/{id}`   | Delete a weight entry by ID    |
+
+### Examples
+
+    # Log weight (date optional, defaults to today)
+    curl -X POST http://127.0.0.1:8000/weigh_in \
+         -H "Content-Type: application/json" \
+         -d '{"kg": 82.5}'
+
+    # Get the latest logged weight
+    curl http://127.0.0.1:8000/weight/latest
+
+---
+
+## 🧪 Tests
+
+This project includes basic `pytest` tests.  
+Run them with:
+
+    pytest -q
+
+---
+
+## ⚙️ CI/CD
+
+GitHub Actions is set up to run automatically on every push/PR:  
+- **Lint:** ruff and black  
+- **Tests:** pytest (using SQLite backend)  
+
+---
+
+## 📦 Tech stack
+
 - **Python 3.12**
 - **FastAPI**
 - **SQLAlchemy**
-- **PostgreSQL**
-- **Docker** (optional for DB)
+- **SQLite** (default) + **Postgres** (optional via Docker)
+- **Docker Compose**
+- **pytest**
+- **GitHub Actions**
 
 ---
 
-## 🖥️ Install & run on your PC
+## 💡 Why this repo?
 
-1) **Clone repository**
-```powershell
-git clone https://github.com/<your-username>/fitness-tracker.git
-cd fitness-tracker
-```
-
-2) **Create & activate virtual env**
-```powershell
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-```
-
-3) **Install dependencies**
-```powershell
-pip install -r requirements.txt
-```
-
-4) **Start PostgreSQL (Docker)**
-```powershell
-docker compose up -d postgres
-docker ps   # verify 'fitness_postgres' is running
-```
-
-5) **Create `.env` in project root**
-```text
-DATABASE_URL=postgresql+psycopg2://user:password@localhost:5432/fitness
-```
-
-6) **Run API**
-```powershell
-python -m uvicorn app.main:app --reload
-```
-
-7) **Test health**
-```powershell
-curl http://127.0.0.1:8000/health
-```
-Expected:
-```json
-{"status": "everything stable"}
-```
-
-👉 Swagger UI: http://127.0.0.1:8000/docs
+This project was created to demonstrate practical experience with:
+- Python backend development (FastAPI)
+- Databases (SQLAlchemy + SQLite/Postgres)
+- API design with validation and error handling
+- Git / GitHub workflow
+- Docker and environment-based configuration
+- CI/CD pipelines with GitHub Actions
 
 ---
 
-## 📌 API Endpoints
+## 🚀 Possible future improvements/implimentations
 
-### Health check
-```
-GET /health
-```
-
-### Log bodyweight
-```
-POST /weigh_in
-```
-Body:
-```json
-{ "date": "2025-09-07", "kg": 82.5 }
-```
-
-### Fetch latest weight
-```
-GET /weight/latest
-```
-
-### Delete weight
-```
-DELETE /weight/{weight_id}
-```
-
----
-
-## 🧪 Quick usage (PowerShell)
-
-**Add a new weight**
-```powershell
-curl -X POST http://127.0.0.1:8000/weigh_in -H "Content-Type: application/json" -d "{ \"date\": \"2025-09-07\", \"kg\": 82.5 }"
-```
-
-**Fetch latest**
-```powershell
-curl http://127.0.0.1:8000/weight/latest
-```
-
-**Delete weight with ID 1**
-```powershell
-curl -X DELETE http://127.0.0.1:8000/weight/1
-```
-
----
-
-## 📝 Notes
-- Save `.env` as **UTF-8/ASCII**  
-- Prefer `python -m uvicorn app.main:app --reload` over bare `uvicorn`  
-- Docker Desktop must be running before Postgres  
-- Hard refresh Swagger with **Ctrl+F5** if the docs look stale  
-
----
-
-## 🔀 Git Workflow
-```powershell
-# create a new branch
-git checkout -b feature/my-feature
-
-# make changes and commit
-git add .
-git commit -m "feat: add my new feature"
-
-# push branch to GitHub
-git push -u origin feature/my-feature
-
-# open PR on GitHub → review → merge into main
-
-# update local main
-git checkout main
-git pull
-```
-
----
-
-## ✅ Next Steps
-- Authentication (users)  
-- Progress charts / visualization  
-- Extend schema with workouts & nutrition  
-- Dockerize FastAPI app (not just Postgres)  
-- CI/CD with GitHub Actions  
-
-
+- Alembic migrations for database schema changes  
+- Authentication (JWT-based)  
+- Frontend dashboard (React or Streamlit)  
+- Extended test coverage  
+- Deployment to cloud (Azure/AWS/GCP)  
+- More endpoints
+- Use API for visualization of weight progression
+- Clean up code/syntax
+- Add more descriptions of what code is doing
