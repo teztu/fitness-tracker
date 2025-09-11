@@ -40,26 +40,39 @@ If not, check if everything is installed properly and if your uvicorn is running
 
 ---
 
-## 🔎 Smoke test (while server is running)
+## 🔎 Smoke test commands (Windows PowerShell + macOS/Linux)
 
-Health:
-
+Health - Status check to see if server is running
+- Windows PowerShell:
+    irm http://127.0.0.1:8000/health
+- macOS/Linux:
     curl http://127.0.0.1:8000/health
 
-Log weight (date optional, defaults to today):
+Log your weight (date optional, defaults to today):
+- Windows PowerShell:
+    irm http://127.0.0.1:8000/weigh_in -Method POST -ContentType 'application/json' -Body '{"kg": 82.5}'
+- macOS/Linux:
+    curl -X POST http://127.0.0.1:8000/weigh_in -H 'Content-Type: application/json' -d '{"kg": 82.5}'
 
-    curl -X POST http://127.0.0.1:8000/weigh_in -H "Content-Type: application/json" -d "{\"kg\": 82.5}"
-
-Get latest:
-
+Get latest registred weight:
+- Windows PowerShell:
+    irm http://127.0.0.1:8000/weight/latest
+- macOS/Linux:
     curl http://127.0.0.1:8000/weight/latest
 
-List (if implemented in this version):
 
-    curl "http://127.0.0.1:8000/weights?limit=5&offset=0"
+
+Delete weight (replace 1 with an actual id)
+- Windows PowerShell:
+    irm http://127.0.0.1:8000/weight/1 -Method DELETE
+- macOS/Linux:
+    curl -X DELETE http://127.0.0.1:8000/weight/1
+
 
 Docs (Swagger UI):
+
 - http://127.0.0.1:8000/docs
+- Useful to navigate through UI and enter values manually with the help of swagger
 
 ---
 
@@ -178,5 +191,6 @@ This project was created to demonstrate practical experience with:
 - Use API for visualization of weight progression  
 - Clean up code/syntax  
 - Add more descriptions of what code is doing
+
 
 
