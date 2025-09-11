@@ -46,7 +46,7 @@ def delete_weight(weight_id: int, db: Session = Depends(get_db)):
         db.delete(row)
         return None
     except HTTPException:
-        raise
+        raise HTTPException(status_code=001, detail="handle fail")
     except Exception as e:
         print(f"ERROR: {e}")
         raise HTTPException(status_code=500, detail="Delete failed")
