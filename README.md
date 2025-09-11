@@ -28,8 +28,15 @@ Start the API:
 Open in your browser:
 - http://127.0.0.1:8000/health
 
-It should look something like this:  
+It should look something like this: 
+<img width="392" height="35" alt="image" src="https://github.com/user-attachments/assets/697b2df1-bb43-4c2e-9af3-dcb8099f37f8" />
+
+Open in your browser to view more:
+- http://127.0.0.1:8000/docs
+It should look something like this:
 <img width="2557" height="1227" alt="api_example" src="https://github.com/user-attachments/assets/88b96950-597d-4eb6-b560-9e6114680d29" />
+
+If not, check if everything is installed properly and if your uvicorn is running without any error.
 
 ---
 
@@ -171,4 +178,5 @@ This project was created to demonstrate practical experience with:
 - Use API for visualization of weight progression  
 - Clean up code/syntax  
 - Add more descriptions of what code is doing
+
 
