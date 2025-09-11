@@ -1,4 +1,4 @@
-﻿from datetime import date
+import datetime as dt
 from pydantic import BaseModel, Field, ConfigDict
 
 class EnterWeight(BaseModel):
