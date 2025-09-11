@@ -11,7 +11,8 @@ Created by **Nicolas Cook** for own learning experience.
 Requires Python 3.12. The app uses SQLite by default and creates a local `app.db`.  
 Tables are created automatically on startup.
 
-Clone and run:
+Make sure you have latest git installed, 
+then clone and run:
 
     git clone https://github.com/teztu/fitness-tracker.git
     cd fitness-tracker
@@ -170,3 +171,4 @@ This project was created to demonstrate practical experience with:
 - Use API for visualization of weight progression  
 - Clean up code/syntax  
 - Add more descriptions of what code is doing
+
