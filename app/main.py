@@ -24,7 +24,8 @@ def entry_weight(payload: schemas.EnterWeight, db: Session = Depends(get_db)):
         db.refresh(row)
         return row
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to insert weight: {str(e)}")
+        print(f"ERROR: {e}")
+        raise HTTPException(status_code=500, detail="Failed weight entry")
 
 
 @app.get("/weight/latest", response_model=schemas.WeightOut | None)
@@ -33,7 +34,8 @@ def get_latest_weight(db: Session = Depends(get_db)):
         row = db.query(models.Weight).order_by(models.Weight.id.desc()).first()
         return row
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch latest weight: {str(e)}")
+        print(f"ERROR: {e}")
+        raise HTTPException(status_code=500, detail="Failed to get weight")
 
 @app.delete("/weight/{weight_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_weight(weight_id: int, db: Session = Depends(get_db)):
@@ -45,7 +47,8 @@ def delete_weight(weight_id: int, db: Session = Depends(get_db)):
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to delete weight: {str(e)}")
+        print(f"ERROR: {e}")
+        raise HTTPException(status_code=500, detail="Delete failed")
 
 
 if __name__ == "__main__":
