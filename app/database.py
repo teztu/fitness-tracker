@@ -8,11 +8,16 @@ from dotenv import load_dotenv
 
 load_dotenv() #reads .env variables
 
-URL_DATABASE= os.getenv("DATABASE_URL") #reads database URL
-if not URL_DATABASE: #catches mistakes for login to databse
-    raise RuntimeError("DATABASE_URL is not set. Check .env file.") #
+URL_DATABASE= os.getenv("DATABASE_URL", "sqlite:///./app.db") #reads database URL, if no postgres, go to sqlite
+#catch login fail
+#if not URL_DATABASE: #catches mistakes for login to databse
+    #raise RuntimeError("DATABASE_URL is not set. Check .env file.") #
 
-engine = create_engine(URL_DATABASE, pool_pre_ping=True) #runs engine (connection pool for DB)
+# For SQLite we need this flag when used with multiple threads (FastAPI dev server)
+connect_args = {"check_same_thread": False} if URL_DATABASE.startswith("sqlite") else {}
+
+#runs engine (connection pool for DB)
+engine = create_engine(URL_DATABASE, pool_pre_ping=True, connect_args=connect_args) 
 
 
 #one DB session per request to avoid
