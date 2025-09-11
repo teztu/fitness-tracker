@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field, ConfigDict
 
 class EnterWeight(BaseModel):
     """expected of user to type"""
-    date: date = Field(default_factory=date.today)
+    date: dt.date = Field(default_factory=dt.date.today, description="date today)")
     kg: float = Field(gt=10, le=400, description="Bodyweight in KG") #want positive number
 
 
